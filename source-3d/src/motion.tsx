@@ -49,14 +49,15 @@ export function usePageMotion(setStep:(step:number)=>void) {
     const footerItems=document.querySelectorAll<HTMLElement>('.footer-top,.sports,.footer-columns>div,.legal,footer>small');
     footerItems.forEach(item=>{item.classList.add('footer-item');reveal.observe(item);});
     const track=document.querySelector<HTMLElement>('.participation-track')!;
-    let frame=0, previousStep=-1, top=0, distance=1;
+    let frame=0, previousStep=-1, top=0, distance=1, manualSelection=false, manualY=0;
     const measure=()=>{top=track.offsetTop;distance=Math.max(1,track.offsetHeight-innerHeight);};
     measure();
     const sizeObserver=new ResizeObserver(measure);sizeObserver.observe(track);
     const update=()=>{
       frame=0;
       const y=window.scrollY;
-      if(y>=top&&y<top+distance){
+      if(manualSelection&&Math.abs(y-manualY)>24){manualSelection=false;previousStep=-1;}
+      if(!manualSelection&&y>=top&&y<top+distance){
         // The first fifth of the sticky runway provides a quiet entry without locking scroll.
         const progress=Math.max(0,Math.min(1,((y-top)/distance-.2)/.8));
         const next=Math.min(2,Math.floor(progress*3));
@@ -64,9 +65,20 @@ export function usePageMotion(setStep:(step:number)=>void) {
       }
     };
     const onScroll=()=>{if(!frame)frame=requestAnimationFrame(update);};
+    const manual=()=>{lenis.scrollTo(window.scrollY,{immediate:true});manualY=window.scrollY;manualSelection=true;};
+    const resume=()=>{manualSelection=false;previousStep=-1;};
+    const onKey=(event:KeyboardEvent)=>{const target=event.target as HTMLElement;if(target.closest('[role=tab],input,button'))return;if(['PageDown','PageUp','Home','End','ArrowDown','ArrowUp',' '].includes(event.key))resume();};
+    const onPointer=(event:PointerEvent)=>{if(event.clientX>=document.documentElement.clientWidth)resume();};
+    const onLink=(event:MouseEvent)=>{if((event.target as HTMLElement).closest('a[href^="#"]'))resume();};
+    window.addEventListener('football:manual-step',manual);
+    window.addEventListener('wheel',resume,{passive:true});
+    window.addEventListener('touchmove',resume,{passive:true});
+    window.addEventListener('keydown',onKey);
+    window.addEventListener('pointerdown',onPointer);
+    window.addEventListener('click',onLink);
     window.addEventListener('scroll',onScroll,{passive:true});
     window.addEventListener('resize',measure);
-    return()=>{cancelAnimationFrame(frame);sizeObserver.disconnect();lenis.destroy();lenisRef.current=null;reveal.disconnect();window.removeEventListener('scroll',onScroll);window.removeEventListener('resize',measure);};
+    return()=>{window.removeEventListener('football:manual-step',manual);window.removeEventListener('wheel',resume);window.removeEventListener('touchmove',resume);window.removeEventListener('keydown',onKey);window.removeEventListener('pointerdown',onPointer);window.removeEventListener('click',onLink);cancelAnimationFrame(frame);sizeObserver.disconnect();lenis.destroy();lenisRef.current=null;reveal.disconnect();window.removeEventListener('scroll',onScroll);window.removeEventListener('resize',measure);};
   },[setStep]);
   return lenisRef;
 }

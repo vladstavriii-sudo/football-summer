@@ -21,9 +21,10 @@ async function json<T>(url: string): Promise<T> {
 }
 RectAreaLightUniformsLib.init();
 
-export default function Scene({hero, step, onReady}: {hero: boolean; step: number; onReady?:()=>void}) {
+export default function Scene({hero, step, onReady, enabled=true}: {hero: boolean; step: number; onReady?:()=>void; enabled?:boolean}) {
   const host = useRef<HTMLDivElement>(null);
   const readyCallback=useRef(onReady);readyCallback.current=onReady;
+  const enabledRef=useRef(enabled);enabledRef.current=enabled;
   const [error, setError] = useState(false);
   useEffect(() => {
     const el = host.current!;
@@ -113,7 +114,7 @@ export default function Scene({hero, step, onReady}: {hero: boolean; step: numbe
         return ray.intersectObject(root,true);
       }
       const move = (event: PointerEvent) => {
-        if (!ready || performance.now()-lastRay<70) return;
+        if (!enabledRef.current || !ready || performance.now()-lastRay<70) return;
         lastRay=performance.now(); const hits=hit(event), over=hits.length>0;
         if(hero&&cluster&&!reduced){
           const now=performance.now(),dt=Math.max(.016,(now-lastPointerAt)/1000);
@@ -128,7 +129,7 @@ export default function Scene({hero, step, onReady}: {hero: boolean; step: numbe
       };
       const leave = () => {hover=false;hoverTicket=-1;pointer.set(0,0);cursor.active=false;previousPointer=null;lastPointerAt=0;};
       const click = (event: PointerEvent) => {
-        if (!ready || hero) return;
+        if (!enabledRef.current || !ready || hero) return;
         const hits=hit(event); if(!hits.length)return;
         if(step===1)open=!open;
         if(step===2){const index=hits[0].object.userData.ticketIndex;pinnedTicket=pinnedTicket===index?-1:index;}
@@ -159,7 +160,7 @@ export default function Scene({hero, step, onReady}: {hero: boolean; step: numbe
       const front=new T.Vector3(),right=new T.Vector3(),up=new T.Vector3(),basis=new T.Matrix4(),wobble=new T.Quaternion(),euler=new T.Euler();
       function tick(now:number) {
         frame=requestAnimationFrame(tick);const dt=Math.min((now-last)/1000,.05);last=now;
-        if(!active || document.hidden || !ready)return;
+        if(!active || !enabledRef.current || document.hidden || !ready)return;
         if(!reduced)time+=dt;
         if(cluster){
           if(!reduced)cluster.step(dt,cursor);
@@ -234,5 +235,5 @@ export default function Scene({hero, step, onReady}: {hero: boolean; step: numbe
     start().catch(e=>{if(!disposed){console.error(e);setError(true);disposed=true;cleanup();}});
     return()=>{disposed=true;cleanup();};
   },[hero,step]);
-  return <div ref={host} className="webgl" aria-label={hero?'3D-композиция футбольных мячей':['3D футбольный мяч','3D кейс — нажми, чтобы открыть или закрыть','3D билеты — наведи на корешок'][step]}>{error&&<span className="loading">Не удалось загрузить 3D. Обнови страницу.</span>}</div>;
+  return <div ref={host} data-model={hero?'hero':String(step)} className="webgl" aria-label={hero?'3D-композиция футбольных мячей':['3D футбольный мяч','3D кейс — нажми, чтобы открыть или закрыть','3D билеты — наведи на корешок'][step]}>{error&&<span className="loading">Не удалось загрузить 3D. Обнови страницу.</span>}</div>;
 }
