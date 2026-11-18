@@ -414,3 +414,9 @@ dialog.mobile-menu{height:var(--mobile-menu-height,auto)}
  .center-reveal-surface .steps{padding-bottom:max(48px,calc(100svh - 700px))}
 }
 @media(prefers-reduced-motion:reduce){.center-reveal-surface .steps>.wrap>.eyebrow,.center-reveal-surface .steps h2{translate:none!important}}
+
+/* Align each step number with the vertical center of its heading. */
+.card-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;align-self:start}
+.card-heading h3{margin:0;flex:1;min-width:0}
+.card-heading .step-number{position:static;flex:none;line-height:1.2}
+@media(max-width:600px){.center-reveal-surface .card-heading{align-self:start;min-height:62px}.card-heading h3{max-width:none!important}}
