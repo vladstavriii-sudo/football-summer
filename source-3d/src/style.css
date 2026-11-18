@@ -243,3 +243,6 @@ html{scrollbar-gutter:stable;overflow-y:scroll}
 .legal .footer-socials strong{display:grid;place-items:center;width:42px;height:42px;padding:0;margin-left:10px;border-radius:50%;font-size:14px;font-weight:400}
 @media(max-width:1200px){.legal span{padding:13px 15px;font-size:10px}.footer-columns{gap:24px}}
 .footer-columns>div:first-child>.dark-pill{flex-direction:row-reverse}
+
+/* Soft separation where the black calculator panel overlaps the white result. */
+.calc-input{box-shadow:inset 0 1px 3px #ffffff44,10px 0 20px -7px #00000055}
