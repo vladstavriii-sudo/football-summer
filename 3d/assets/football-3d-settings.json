@@ -1,0 +1,446 @@
+{
+  "description": "Последние модели и настройки одобренного локального просмотра. Свет, фон, тени, веер и hover применяются в Three.js поверх GLB.",
+  "assets": {
+    "ball": {
+      "url": "/assets/trionda.glb",
+      "bytes": 1248020,
+      "sha256": "bd717c0ae6bbcd5d5092e99dfd60494b49e5d28e48b1ffb63418c081e2b7f79b",
+      "animation_clips": []
+    },
+    "case": {
+      "url": "/assets/suitcase.glb",
+      "bytes": 3203112,
+      "sha256": "125aa40b7601937dc5d18def128bd9c4919f09900a123f4098cd5e3dccc32aac",
+      "animation_clips": [
+        "Latch_LeftAction",
+        "Latch_RightAction",
+        "Lid_HingeAction"
+      ]
+    },
+    "tickets": {
+      "url": "/assets/freebet-creativebyte.glb",
+      "bytes": 6766800,
+      "sha256": "c5082cfafd2044cf221c844b040ed69a8fdb9702febb512b5a9011af71e6290b",
+      "animation_clips": [
+        "Ticket_StubAction",
+        "Ticket_TearoffAction"
+      ]
+    }
+  },
+  "renderer": {
+    "toneMapping": "ACESFilmicToneMapping",
+    "pixelRatioCap": 2
+  },
+  "background": {
+    "size": [
+      1024,
+      1024
+    ],
+    "base": "#020303",
+    "radialGradient": {
+      "center": [
+        512,
+        515
+      ],
+      "innerRadius": 0,
+      "outerRadius": 440,
+      "stops": [
+        [
+          0,
+          "#07110b"
+        ],
+        [
+          0.4,
+          "#040b07"
+        ],
+        [
+          0.75,
+          "#030504"
+        ],
+        [
+          1,
+          "#020303"
+        ]
+      ]
+    }
+  },
+  "environment": {
+    "type": "PMREMGenerator.fromScene(RoomEnvironment)",
+    "sigma": 0.04
+  },
+  "lighting": {
+    "target": [
+      0,
+      1.5,
+      0
+    ],
+    "key": {
+      "type": "RectAreaLight",
+      "color": "#f6f5f0",
+      "width": 4,
+      "height": 4
+    },
+    "fill": {
+      "type": "RectAreaLight",
+      "color": "#eef1f6",
+      "width": 4,
+      "height": 4,
+      "position": [
+        3,
+        2.5,
+        4
+      ]
+    },
+    "ambient": {
+      "type": "HemisphereLight",
+      "sky": "#dde2eb",
+      "ground": "#111411"
+    },
+    "top": {
+      "type": "DirectionalLight",
+      "color": "#f4f5ef",
+      "position": [
+        -2,
+        6,
+        2
+      ]
+    },
+    "rimLeft": {
+      "type": "DirectionalLight",
+      "color": "#d4ff65",
+      "target": [
+        0,
+        1.5,
+        0
+      ]
+    },
+    "rimRight": {
+      "type": "DirectionalLight",
+      "color": "#d4ff75",
+      "target": [
+        0,
+        1.5,
+        0
+      ]
+    },
+    "profiles": {
+      "ball": {
+        "exposure": 0.9,
+        "key": 1.5,
+        "fill": 0.5,
+        "ambient": 0.22,
+        "top": 0.25,
+        "environmentIntensity": 0.22,
+        "rimLeft": 8,
+        "rimRight": 5,
+        "keyPosition": [
+          -3,
+          4.5,
+          5
+        ],
+        "rimLeftPosition": [
+          -3,
+          4.5,
+          -9
+        ],
+        "rimRightPosition": [
+          4,
+          2.5,
+          -10
+        ]
+      },
+      "case": {
+        "exposure": 0.95,
+        "key": 2.5,
+        "fill": 0.65,
+        "ambient": 0.22,
+        "top": 0.3,
+        "environmentIntensity": 0.28,
+        "rimLeft": 1.6,
+        "rimRight": 0.8,
+        "keyPosition": [
+          -3,
+          4.5,
+          5
+        ],
+        "rimLeftPosition": [
+          -3,
+          1.4,
+          -9
+        ],
+        "rimRightPosition": [
+          4,
+          1.4,
+          -10
+        ]
+      },
+      "tickets": {
+        "exposure": 1,
+        "key": 5,
+        "fill": 1.3,
+        "ambient": 0.35,
+        "top": 0.25,
+        "environmentIntensity": 0.25,
+        "rimLeft": 3.5,
+        "rimRight": 2,
+        "keyPosition": [
+          -1,
+          3,
+          4
+        ],
+        "rimLeftPosition": [
+          -3,
+          4.5,
+          -9
+        ],
+        "rimRightPosition": [
+          4,
+          2.5,
+          -10
+        ]
+      }
+    }
+  },
+  "camera": {
+    "type": "PerspectiveCamera",
+    "fov": 33,
+    "near": 0.1,
+    "far": 80,
+    "ball": {
+      "position": [
+        0,
+        1.7,
+        8
+      ],
+      "target": [
+        0,
+        1.15,
+        0
+      ]
+    },
+    "case": {
+      "position": [
+        4.5,
+        2.9,
+        7.8
+      ],
+      "target": [
+        0,
+        1.5,
+        0
+      ]
+    },
+    "tickets": {
+      "position": [
+        0.6,
+        1.9,
+        8.9
+      ],
+      "target": [
+        0,
+        1.45,
+        0
+      ]
+    },
+    "narrowAspectThreshold": 0.85,
+    "narrowDistanceMultipliers": {
+      "ball": 1,
+      "case": 1.45,
+      "tickets": 1.45
+    }
+  },
+  "placement": {
+    "ball": {
+      "normalizeMaxDimension": 2,
+      "preciseBounds": true,
+      "centerModel": true,
+      "innerRotationZ": 3.141592653589793,
+      "position": [
+        0,
+        1.4,
+        0
+      ]
+    },
+    "case": {
+      "position": [
+        0,
+        0.77,
+        0
+      ],
+      "rotationY": -0.16
+    },
+    "tickets": {
+      "groupPosition": [
+        0,
+        1.4,
+        0
+      ],
+      "copies": 3,
+      "uniformScale": 0.78,
+      "modelRotationX": 1.5707963267948966,
+      "sheets": [
+        {
+          "position": [
+            -0.32,
+            0.08,
+            -0.22
+          ],
+          "rotationZ": -0.14,
+          "rotationY": -0.04
+        },
+        {
+          "position": [
+            0,
+            0,
+            0.25
+          ],
+          "rotationZ": 0,
+          "rotationY": 0
+        },
+        {
+          "position": [
+            0.32,
+            0.08,
+            -0.22
+          ],
+          "rotationZ": 0.14,
+          "rotationY": 0.04
+        }
+      ]
+    }
+  },
+  "materials": {
+    "ball": {
+      "envMapIntensity": 0.48,
+      "minimumRoughness": 0.56,
+      "emissiveIntensity": 0
+    },
+    "case": {
+      "side": "FrontSide",
+      "envMapIntensity": 0.7,
+      "leatherAndFoam": {
+        "envMapIntensity": 0.18,
+        "roughness": 0.82,
+        "normalMap": null
+      }
+    },
+    "tickets": {
+      "envMapIntensity": 0.18,
+      "emissiveIntensity": 0,
+      "roughness": 0.86,
+      "colorMultiplyScalar": 0.95
+    }
+  },
+  "floor": {
+    "shadow": {
+      "y": 0.008,
+      "renderOrder": 2,
+      "stops": [
+        [
+          0,
+          "rgba(0,0,0,.65)"
+        ],
+        [
+          0.24,
+          "rgba(0,0,0,.42)"
+        ],
+        [
+          0.6,
+          "rgba(0,0,0,.12)"
+        ],
+        [
+          1,
+          "rgba(0,0,0,0)"
+        ]
+      ]
+    },
+    "reflectedLight": {
+      "position": [
+        0,
+        0.003,
+        -0.12
+      ],
+      "renderOrder": 1,
+      "sizeMultiplier": 1.28,
+      "colorSpace": "SRGBColorSpace",
+      "stops": [
+        [
+          0,
+          "rgba(123,145,93,.22)"
+        ],
+        [
+          0.35,
+          "rgba(123,145,93,.14)"
+        ],
+        [
+          0.72,
+          "rgba(123,145,93,.04)"
+        ],
+        [
+          1,
+          "rgba(123,145,93,0)"
+        ]
+      ]
+    },
+    "footprints": {
+      "ball": [
+        3.5,
+        3.2
+      ],
+      "case": [
+        5,
+        3.5
+      ],
+      "tickets": [
+        5.2,
+        2.6
+      ]
+    }
+  },
+  "interaction": {
+    "floatAmplitude": 0.035,
+    "floatFrequency": 0.9,
+    "ball": {
+      "baseRotationRadiansPerSecond": 0.12,
+      "hoverExtraTurns": 1,
+      "hoverDurationSeconds": 1,
+      "easing": "smootherstep; additive to base rotation"
+    },
+    "case": {
+      "lidNode": "Lid_Hinge",
+      "latchNodes": [
+        "Latch_Left",
+        "Latch_Right"
+      ],
+      "lidOpenDegrees": 58,
+      "latchOpenDegrees": 65,
+      "hoverTiltX": 0.17,
+      "hoverYawDelta": 0.28,
+      "damping": 4.2
+    },
+    "tickets": {
+      "stubNode": "Ticket_Stub",
+      "tearoffNode": "Ticket_Tearoff",
+      "curlMorphIndex": 0,
+      "curlMorphName": "PaperCurl",
+      "tearTranslation": [
+        0.23,
+        0,
+        0.11
+      ],
+      "tearRotation": [
+        0,
+        -0.11,
+        -0.07
+      ],
+      "independentPerSheet": true,
+      "pointerTiltLimits": [
+        0.08,
+        0.13,
+        0.025
+      ],
+      "damping": 5
+    },
+    "respectReducedMotion": true
+  }
+}
